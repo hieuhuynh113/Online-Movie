@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieFlix - Watch Movies Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-red-600">MovieFlix</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-4">
+                        <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2">Home</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Movies</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2">TV Shows</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2">My List</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search movies..." class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                    </div>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-300 hover:text-white">
+                            <img src="https://ui-avatars.com/api/?name=User" alt="User" class="w-8 h-8 rounded-full">
+                            <span class="hidden md:inline">My Account</span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 hidden group-hover:block">
+                            <div class="py-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white">Profile</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white">Settings</a>
+                                <a href="login.html" onclick="logout()" class="block px-4 py-2 text-sm text-gray-300 hover:text-white">Sign out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative h-screen">
+        <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <div class="absolute inset-0">
+            <img src="https://image.tmdb.org/t/p/original/628Dep6AxEtDxjZoGP78TsOxYbK.jpg" class="w-full h-full object-cover" alt="Hero Movie">
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 z-20">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-5xl font-bold mb-4">The Latest Blockbuster</h1>
+                <p class="text-xl mb-6 max-w-2xl">Experience the most exciting movies and TV shows streaming now. Watch anywhere, anytime.</p>
+                <button class="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                    <i class="fas fa-play mr-2"></i> Watch Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trending Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Trending Now</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Movie Cards -->
+                <div class="movie-card relative group animate-fadeIn">
+                    <img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" class="w-full h-auto rounded-lg transform group-hover:scale-105 transition duration-300" alt="Movie">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex flex-col items-center justify-center p-4">
+                        <h3 class="text-lg font-bold mb-2">Movie Title</h3>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <span>8.5</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <a href="movie-detail.html?id=1" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300">
+                                View Details
+                            </a>
+                            <button onclick="toggleFavorite(1)" class="bg-gray-800 text-white p-2 rounded-lg hover:bg-gray-700 transition duration-300">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat movie cards with different images -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Movies Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Popular Movies</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Movie Cards -->
+                <div class="movie-card relative group animate-fadeIn">
+                    <img src="https://image.tmdb.org/t/p/w500/qi9r5xBgcc9KTxlOLjssEbDgO0J.jpg" class="w-full h-auto rounded-lg transform group-hover:scale-105 transition duration-300" alt="Movie">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex flex-col items-center justify-center p-4">
+                        <h3 class="text-lg font-bold mb-2">Movie Title</h3>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <span>8.5</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <a href="movie-detail.html?id=1" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300">
+                                View Details
+                            </a>
+                            <button onclick="toggleFavorite(1)" class="bg-gray-800 text-white p-2 rounded-lg hover:bg-gray-700 transition duration-300">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat movie cards with different images -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">MovieFlix</h3>
+                    <p class="text-gray-400">Your ultimate destination for movies and TV shows.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Home</a></li>
+                        <li><a href="#" class="hover:text-white">Movies</a></li>
+                        <li><a href="#" class="hover:text-white">TV Shows</a></li>
+                        <li><a href="#" class="hover:text-white">My List</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2024 MovieFlix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = checkAuth();
+            if (!currentUser) return;
+        });
+    </script>
+</body>
+</html>

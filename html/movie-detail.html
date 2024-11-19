@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Detail - MovieFlix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-red-600">MovieFlix</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-4">
+                        <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2">Home</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Movies</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2">TV Shows</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2">My List</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search movies..." class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                    </div>
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 text-gray-300 hover:text-white">
+                            <img src="https://ui-avatars.com/api/?name=User" alt="User" class="w-8 h-8 rounded-full">
+                            <span class="hidden md:inline">My Account</span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 hidden group-hover:block">
+                            <div class="py-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white">Profile</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:text-white">Settings</a>
+                                <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-300 hover:text-white">Sign out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Movie Detail Section -->
+    <div class="pt-16">
+        <!-- Movie Header -->
+        <div class="relative h-[70vh]">
+            <div class="absolute inset-0">
+                <img src="" id="movie-backdrop" class="w-full h-full object-cover" alt="Movie Backdrop">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80"></div>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 px-4 py-8">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-end gap-8">
+                    <img src="" id="movie-poster" class="w-64 rounded-lg shadow-lg" alt="Movie Poster">
+                    <div class="flex-1">
+                        <h1 id="movie-title" class="text-4xl font-bold mb-2"></h1>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <span id="movie-year" class="text-gray-400"></span>
+                            <span id="movie-runtime" class="text-gray-400"></span>
+                            <span id="movie-rating" class="text-gray-400"></span>
+                        </div>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <button class="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                                <i class="fas fa-play mr-2"></i> Watch Now
+                            </button>
+                            <button onclick="toggleFavorite(currentMovieId)" class="bg-gray-800 text-white px-4 py-3 rounded-lg font-semibold hover:bg-gray-700 transition duration-300">
+                                <i class="fas fa-heart mr-2"></i> Add to Favorites
+                            </button>
+                            <div class="flex items-center space-x-1" data-rating="0">
+                                <i class="fas fa-star star cursor-pointer text-gray-400 hover:text-yellow-400" onclick="rateMovie(currentMovieId, 1)"></i>
+                                <i class="fas fa-star star cursor-pointer text-gray-400 hover:text-yellow-400" onclick="rateMovie(currentMovieId, 2)"></i>
+                                <i class="fas fa-star star cursor-pointer text-gray-400 hover:text-yellow-400" onclick="rateMovie(currentMovieId, 3)"></i>
+                                <i class="fas fa-star star cursor-pointer text-gray-400 hover:text-yellow-400" onclick="rateMovie(currentMovieId, 4)"></i>
+                                <i class="fas fa-star star cursor-pointer text-gray-400 hover:text-yellow-400" onclick="rateMovie(currentMovieId, 5)"></i>
+                            </div>
+                        </div>
+                        <p id="movie-overview" class="text-lg text-gray-300 max-w-3xl"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Movie Details -->
+        <div class="max-w-7xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Cast & Crew -->
+                <div class="col-span-2">
+                    <h2 class="text-2xl font-bold mb-6">Cast & Crew</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="movie-cast">
+                        <!-- Cast members will be added here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Movie Info -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">Movie Info</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-gray-400">Director</h3>
+                            <p id="movie-director" class="text-lg"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-400">Writers</h3>
+                            <p id="movie-writers" class="text-lg"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-400">Genres</h3>
+                            <div id="movie-genres" class="flex flex-wrap gap-2">
+                                <!-- Genres will be added here dynamically -->
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-400">Release Date</h3>
+                            <p id="movie-release-date" class="text-lg"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Movies -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold mb-6">Similar Movies</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4" id="similar-movies">
+                    <!-- Similar movies will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">MovieFlix</h3>
+                    <p class="text-gray-400">Your ultimate destination for movies and TV shows.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Home</a></li>
+                        <li><a href="#" class="hover:text-white">Movies</a></li>
+                        <li><a href="#" class="hover:text-white">TV Shows</a></li>
+                        <li><a href="#" class="hover:text-white">My List</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2024 MovieFlix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/movie-detail.js"></script>
+</body>
+</html>
